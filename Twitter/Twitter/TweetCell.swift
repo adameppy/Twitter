@@ -33,7 +33,7 @@ class TweetCell: UITableViewCell {
         
         var id = tweet.tweetid!
         
-        TwitterClient.sharedInstance.POST("1.1/statuses/retweet/241259202004267009.json", parameters: nil, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
+        TwitterClient.sharedInstance.POST("1.1/statuses/retweet/\(id).json", parameters: nil, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
             print("success retweeting")
             //var vc = self.window?.rootViewController as! TweetsViewController
             //vc.tableView.reloadData()
