@@ -35,9 +35,9 @@ class TweetCell: UITableViewCell {
         
         TwitterClient.sharedInstance.POST("1.1/statuses/retweet/\(id).json", parameters: nil, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
             print("success retweeting")
-            //var vc = self.window?.rootViewController as! TweetsViewController
-            //vc.tableView.reloadData()
-            //print("user: \(response)")
+            self.tweet.retweetCount++
+            self.retweetLabel.text = "\(self.tweet.retweetCount)"
+
             }, failure: { (operation: NSURLSessionDataTask?, error: NSError!) -> Void in
                 print("error retweeting")
                 print(error)
@@ -46,14 +46,13 @@ class TweetCell: UITableViewCell {
         
     }
     @IBAction func favorite(sender: AnyObject) {
-        print(1)
+
         var id = tweet.tweetid!
-        print(2)
-        TwitterClient.sharedInstance.POST("1.1/favorites/create.json", parameters: nil, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
-            print(3)
-            //var vc = self.window?.rootViewController as! TweetsViewController
-            print(4)
-            //vc.tableView.reloadData()
+        var params = ["id": id] as NSDictionary!
+        TwitterClient.sharedInstance.POST("1.1/favorites/create.json", parameters: params, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
+            print("favorited \(self.tweet.text!)");
+            self.tweet.favoritesCount++
+            self.favoriteLabel.text = "\(self.tweet.favoritesCount)"
             print("success favoriting")
             //print("user: \(response)")
             }, failure: { (operation: NSURLSessionDataTask?, error: NSError!) -> Void in
