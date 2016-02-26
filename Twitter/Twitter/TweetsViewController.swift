@@ -17,6 +17,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 0, green: 132.0/255.0, blue: 180.0/255.0, alpha: 1)
+        self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
@@ -45,7 +47,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        print("entered the function")
+        //print("entered the function")
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetCell
         let tweet = tweets[indexPath.row]
         cell.tweet = tweet
@@ -58,7 +60,19 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.tweetLabel.text = tweet.text!
         cell.retweetLabel.text = "\(tweet.retweetCount)"
         cell.favoriteLabel.text = "\(tweet.favoritesCount)"
-            print(tweet.favoritesCount)
+            //print(tweet.favoritesCount)
+        if(tweet.favorited == true){
+            let origImage = UIImage(named: "fav");
+            let tintedImage = origImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            cell.favoriteBtn.setImage(tintedImage, forState: .Normal)
+            cell.favoriteBtn.tintColor = UIColor.redColor()
+        }
+        if(tweet.retweeted == true){
+            let origImage = UIImage(named: "retweet");
+            let tintedImage = origImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            cell.retweetBtn.setImage(tintedImage, forState: .Normal)
+            cell.retweetBtn.tintColor = UIColor.greenColor()
+        }
         return cell
     }
     
