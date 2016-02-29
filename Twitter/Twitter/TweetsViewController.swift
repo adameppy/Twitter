@@ -17,7 +17,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 0, green: 132.0/255.0, blue: 180.0/255.0, alpha: 1)
+        //self.navigationController?.navigationBar.backgroundColor = UIColor(red: 0, green: 132.0/255.0, blue: 180.0/255.0, alpha: 1)
         self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
@@ -85,6 +85,24 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 return 0
             }
         
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "tweetSegue"){
+            print("segueing to tweet")
+            let controller = segue.destinationViewController as! TweetViewController
+            controller.tweet = tweets[tableView.indexPathForSelectedRow!.row]
+        }
+        else if(segue.identifier == "profileSegue"){
+            let controller = segue.destinationViewController as! ProfileViewController
+            let button = sender as! UIButton
+            let view = button.superview!
+            let cell = view.superview as! TweetCell
+            let indexPath = tableView.indexPathForCell(cell)
+            controller.user = tweets[indexPath!.row].user
+            
+        }
+            
     }
 
 
