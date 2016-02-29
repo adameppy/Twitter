@@ -30,7 +30,7 @@ class ComposeViewController: UIViewController {
         var status = textView.text as String
         var params = ["status": status] as NSDictionary!
         if reply_id != nil{
-            params.setValue(reply_id, forKey: "in_reply_to_status_id")
+            params = ["status": status, "in_reply_to_status_id": reply_id!] as NSDictionary!
         }
         TwitterClient.sharedInstance.POST("1.1/statuses/update.json", parameters: params, success: { (operation: NSURLSessionDataTask!, response: AnyObject?) -> Void in
             print("success posting")
